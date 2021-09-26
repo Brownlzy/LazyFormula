@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/LazyFormula"/>
+    <qresource prefix="/language">
+        <file>lazyformula_zh.qm</file>
+    </qresource>
+</RCC>

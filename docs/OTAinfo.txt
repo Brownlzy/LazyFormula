@@ -1,0 +1,5 @@
+LazyFormula_OTA_INFO!100<0.1-alpha<100<1<<<http://192.168.0.6/LFv[VERSION]_exe!========最新版本========
+Version 0.1-alpha
+1.完成主要功能.
+
+========历史版本========
