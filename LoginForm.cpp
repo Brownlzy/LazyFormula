@@ -10,7 +10,7 @@ LoginForm::LoginForm(QWidget* parent, QString pw)
 	connect(ui.btnBack, SIGNAL(clicked()), this, SLOT(SwitchToLogin()));
 	connect(ui.btnForgetPW, SIGNAL(clicked()), this, SLOT(SwitchToFPW()));
 	connect(ui.checkBox, SIGNAL(clicked()), this, SLOT(chkShowPW()));
-
+	this->setWindowIcon(QIcon(":/pic/l.ico"));
 }
 
 LoginForm::~LoginForm()

@@ -3,4 +3,9 @@
     <qresource prefix="/language">
         <file>lazyformula_zh.qm</file>
     </qresource>
+    <qresource prefix="/pic">
+        <file alias="ico">lf.ico</file>
+        <file>l.ico</file>
+        <file>s.ico</file>
+    </qresource>
 </RCC>

@@ -37,12 +37,22 @@ int LazyFormula::Initiallize()
 	connect(ui.listIndex, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(RefreshFormula(QListWidgetItem*)));
 	connect(ui.btnReload, SIGNAL(clicked()), this, SLOT(RefreshFormula()));
 	connect(ui.btnSave, SIGNAL(clicked()), this, SLOT(SaveFormula()));
+	connect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+	connect(ui.txtNewFormula, SIGNAL(returnPressed()), this, SLOT(AddIndex()));
 	return 0;
 }
 
 void LazyFormula::RefreshSettings()
 {
 	ui.labIndexPath->setText(QString(tr("Index is saved in:")) + QString::fromStdString(pOPFile->myini.IndexPath));
+	ui.labIndexPath->setToolTip(QString(tr("Index is saved in:")) + QString::fromStdString(pOPFile->myini.IndexPath));
+	int row = ui.listIndex->currentIndex().row();
+	if (row != -1)
+	{
+		disconnect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+		PrepareEdit();
+		connect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+	}
 }
 
 void LazyFormula::RefreshIndex()
@@ -51,7 +61,7 @@ void LazyFormula::RefreshIndex()
 	ui.labF->setText(tr("numFormula:") + QString::number(pOPFile->numIndex));
 	for (int i = 0; i < pOPFile->numIndex; i++)
 	{
-		ui.listIndex->addItem(new QListWidgetItem(pOPFile->index[i].FName));
+		ui.listIndex->addItem(new QListWidgetItem((pOPFile->index[i].isCompleted ? "" : "*") + pOPFile->index[i].FName));
 	}
 }
 
@@ -71,12 +81,30 @@ void LazyFormula::RefreshFormula()
 			ui.tableFormula->setItem(i, 2, new QTableWidgetItem(pOPFile->formula[i].company));
 			if (pOPFile->formula[i].amount > 0 && pOPFile->allDosage > 0) ui.tableFormula->setItem(i, 3, new QTableWidgetItem(QString::number((int)(pOPFile->formula[i].amount / pOPFile->allDosage * 100)) + "%"));
 		}
+		disconnect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+		PrepareEdit();
+		connect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+	}
+	else
+	{
+		ui.tableFormula->clearContents();
+		ui.tableFormula->setRowCount(0);
+		disconnect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+		ui.tableEdit->clearContents();
+		ui.tableEdit->setRowCount(0);
+		connect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
+		ui.labD->setText(tr(":All Dosage"));
+		ui.labM->setText(tr("All Material:"));
 	}
 }
 
 void LazyFormula::RefreshFormula(QListWidgetItem* item)
 {
-	pOPFile->ReadFormula(item->text());
+	if (item->text().startsWith("*"))
+		pOPFile->ReadFormula(item->text().split("*")[1]);
+	else
+		pOPFile->ReadFormula(item->text());
+	ui.checkBox->setChecked(!item->text().startsWith("*"));
 	RefreshFormula();
 }
 
@@ -86,6 +114,17 @@ void LazyFormula::SaveFormula()
 	if (row != -1)
 	{
 		pOPFile->numFormula = ui.tableFormula->rowCount();
+		if (ui.listIndex->item(row)->text().startsWith("*") && ui.checkBox->isChecked())
+		{
+			ui.listIndex->item(row)->setText(ui.listIndex->item(row)->text().split("*")[1]);
+		}
+		else if (!ui.listIndex->item(row)->text().startsWith("*") && !ui.checkBox->isChecked())
+		{
+			ui.listIndex->item(row)->setText("*" + ui.listIndex->item(row)->text());
+		}
+		Formula* tmp = new Formula[pOPFile->numFormula];
+		delete[] pOPFile->formula;
+		pOPFile->formula = tmp;
 		for (int i = 0; i < pOPFile->numFormula; i++)
 		{
 			pOPFile->formula[i].name = ui.tableFormula->item(i, 0)->text();
@@ -93,9 +132,13 @@ void LazyFormula::SaveFormula()
 			pOPFile->formula[i].company = ui.tableFormula->item(i, 2)->text();
 		}
 		for (int i = 0; i < pOPFile->numIndex; i++)
-			if (ui.listIndex->currentItem()->text() == pOPFile->index[i].FName)
-				pOPFile->WriteFormula(i);
+			if (ui.listIndex->currentItem()->text() == pOPFile->index[i].FName
+				|| ui.listIndex->currentItem()->text().startsWith("*") && ui.listIndex->currentItem()->text().split("*")[1] == pOPFile->index[i].FName)
+			{
+				pOPFile->WriteFormula(i, ui.checkBox->isChecked());
+			}
 		RefreshFormula();
+		ui.stBar->showMessage(tr("Susseffully Saved formula \"") + (ui.listIndex->item(row)->text().startsWith("*") ? ui.listIndex->item(row)->text().split("*")[1] : ui.listIndex->item(row)->text()) + tr("\"."));
 	}
 	else
 	{
@@ -105,6 +148,11 @@ void LazyFormula::SaveFormula()
 
 void LazyFormula::AddIndex()
 {
+	if (ui.txtNewFormula->text().contains("*"))
+	{
+		ui.stBar->showMessage(tr("\"*\" cant be a part of formula name, Please change a name."));
+		return;
+	}
 	if (ui.txtNewFormula->text() != "")
 		switch (pOPFile->WriteFormula(ui.txtNewFormula->text()))
 		{
@@ -129,13 +177,28 @@ void LazyFormula::DeleteIndex()
 	int row = ui.listIndex->currentIndex().row();
 	if (row != -1)
 	{
-		pOPFile->DeleteFormula(ui.listIndex->currentItem()->text());
-		RefreshIndex();
-		ui.tableFormula->clearContents();
-		ui.tableFormula->setRowCount(0);
-		ui.labD->setText("0" + tr(":All Dosage"));
-		ui.labM->setText(tr("All Material:") + "0");
-		ui.stBar->showMessage(tr("Deleted Successfully"));
+		QMessageBox::StandardButton result = QMessageBox::warning(NULL, tr("Warning"), tr("About to delete formula \"") + ui.listIndex->currentItem()->text() + tr("\"\nPress \"No\" to Cancel."), QMessageBox::Yes | QMessageBox::No);
+		switch (result)
+		{
+		case QMessageBox::Yes:
+			if (ui.listIndex->currentItem()->text().startsWith("*"))
+				pOPFile->DeleteFormula(ui.listIndex->currentItem()->text().split("*")[1]);
+			else
+				pOPFile->DeleteFormula(ui.listIndex->currentItem()->text());
+			RefreshIndex();
+			RefreshFormula();
+			ui.tableFormula->clearContents();
+			ui.tableFormula->setRowCount(0);
+			ui.labD->setText("0" + tr(":All Dosage"));
+			ui.labM->setText(tr("All Material:") + "0");
+			ui.stBar->showMessage(tr("Deleted Successfully"));
+			break;
+		case QMessageBox::No:
+			return;
+			break;
+		default:
+			break;
+		}
 	}
 	else
 	{
@@ -148,13 +211,85 @@ void LazyFormula::resizeEvent(QResizeEvent* event)
 	int x = this->frameGeometry().width();
 	int y = this->frameGeometry().height();
 	ui.listIndex->setGeometry(ui.listIndex->x(), ui.listIndex->y(), ui.listIndex->width(), y - 120);
-	ui.tableFormula->setGeometry(ui.tableFormula->x(), ui.tableFormula->y(), x - 200, y - 120);
-	if (x < 672)ui.labD->move(x - 371, ui.labD->y());
+	ui.tableFormula->setGeometry(ui.tableFormula->x(), ui.tableFormula->y(), ui.tableFormula->width(), y - 120);
+	ui.tableEdit->setGeometry(ui.tableEdit->x(), ui.tableEdit->y(), ui.tableEdit->width(), y - 120);
+	//if (x < 672)ui.labD->move(x - 371, ui.labD->y());
+}
+
+void LazyFormula::PrepareEdit()
+{
+	ui.tableEdit->clearContents();
+	int numMaterial = QString::fromStdString(pOPFile->myini.Material).count("<br/>") + 1;
+	ui.tableEdit->setRowCount(numMaterial);
+	for (int i = 0; i < numMaterial; i++)
+	{
+		ui.tableEdit->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(pOPFile->myini.Material).split("<br/>")[i]));
+		ui.tableEdit->setItem(i, 1, new QTableWidgetItem("0"));
+		ui.tableEdit->setItem(i, 2, new QTableWidgetItem("-"));
+	}
+	int flag = 1;
+	for (int i = 0; i < ui.tableFormula->rowCount(); i++)
+	{
+		for (int j = 0; j < ui.tableEdit->rowCount(); j++)
+		{
+			if (ui.tableEdit->item(j, 0)->text() == ui.tableFormula->item(i, 0)->text())
+			{
+				ui.tableEdit->item(j, 1)->setText(ui.tableFormula->item(i, 1)->text());
+				ui.tableEdit->item(j, 2)->setText(ui.tableFormula->item(i, 2)->text());
+				flag = 0;
+				break;
+			}
+		}
+		if (flag)
+		{
+			ui.tableEdit->setRowCount(ui.tableEdit->rowCount() + 1);
+			ui.tableEdit->setItem(ui.tableEdit->rowCount() - 1, 0, new QTableWidgetItem(ui.tableFormula->item(i, 0)->text()));
+			ui.tableEdit->setItem(ui.tableEdit->rowCount() - 1, 1, new QTableWidgetItem(ui.tableFormula->item(i, 1)->text()));
+			ui.tableEdit->setItem(ui.tableEdit->rowCount() - 1, 2, new QTableWidgetItem(ui.tableFormula->item(i, 2)->text()));
+		}
+	}
+}
+
+void LazyFormula::EditChanged(int x, int y)
+{
+	if (ui.tableEdit->item(x, 1)->text() == "" || ui.tableEdit->item(x, 1)->text() == "0")
+	{
+		for (int i = 0; i < ui.tableFormula->rowCount(); i++)
+		{
+			if (ui.tableFormula->item(i, 0)->text() == ui.tableEdit->item(x, 0)->text())
+			{
+				ui.tableFormula->removeRow(i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		int flag = 1;
+		for (int i = 0; i < ui.tableFormula->rowCount(); i++)
+		{
+			if (ui.tableFormula->item(i, 0)->text() == ui.tableEdit->item(x, 0)->text())
+			{
+				ui.tableFormula->item(i, 1)->setText(ui.tableEdit->item(x, 1)->text());
+				ui.tableFormula->item(i, 2)->setText(ui.tableEdit->item(x, 2)->text());
+				flag = 0;
+				break;
+			}
+		}
+		if (flag)
+		{
+			ui.tableFormula->setRowCount(ui.tableFormula->rowCount() + 1);
+			ui.tableFormula->setItem(ui.tableFormula->rowCount() - 1, 0, new QTableWidgetItem(ui.tableEdit->item(x, 0)->text()));
+			ui.tableFormula->setItem(ui.tableFormula->rowCount() - 1, 1, new QTableWidgetItem(ui.tableEdit->item(x, 1)->text()));
+			ui.tableFormula->setItem(ui.tableFormula->rowCount() - 1, 2, new QTableWidgetItem(ui.tableEdit->item(x, 2)->text()));
+		}
+	}
 }
 
 void LazyFormula::ShowSettings()
 {
 	pSettings = new Settings(pOPFile);
+	pSettings->setModal(this);
 	pSettings->show();
 	pSettings->exec();
 	RefreshSettings();

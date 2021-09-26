@@ -8,6 +8,7 @@
 #include <QTranslator>
 #include "appinfo.h"
 #include "LoginForm.h"
+#include <QMessagebox>
 
 class LazyFormula : public QMainWindow
 {
@@ -32,4 +33,6 @@ public slots:
 	void AddIndex();
 	void DeleteIndex();
 	void resizeEvent(QResizeEvent* event);
+	void PrepareEdit();
+	void EditChanged(int x, int y);
 };

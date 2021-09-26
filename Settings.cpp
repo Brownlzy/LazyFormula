@@ -43,6 +43,7 @@ int Settings::Initialize()
 	connect(ui.btnUpdate, SIGNAL(clicked()), this, SLOT(btnDoUpdate()));
 	ui.labUpdate->setText(QString("Build Time: ") + RELEASETIME);
 	ui.labVersion->setText(QString("v") + VERSION + "(" + QString::number(VERSIONID) + ")");
+	this->setWindowIcon(QIcon(":/pic/s.ico"));
 	return 0;
 }
 

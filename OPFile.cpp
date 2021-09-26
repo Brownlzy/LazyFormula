@@ -150,12 +150,17 @@ int OPFile::ReadFormula(QString name)
 	return -1;
 }
 
-int OPFile::WriteFormula(int i)
+int OPFile::WriteFormula(int i, bool isDone)
 {
 	ofstream fout(myini.IndexPath + "/" + index[i].Path.toStdString());
 	if (!fout)
 	{
 		return -1;
+	}
+	if (isDone != index[i].isCompleted)
+	{
+		index[i].isCompleted = isDone;
+		WriteIndex();
 	}
 	allMaterial = 0;
 	allDosage = 0;
@@ -190,31 +195,34 @@ int OPFile::WriteFormula(QString name)
 	{
 		return -2;
 	}
-	int numMaterial = QString::fromStdString(myini.Material).count("<br/>");
-	numFormula = numMaterial + 1;
+	//int numMaterial = QString::fromStdString(myini.Material).count("<br/>");
+	//numFormula = numMaterial + 1;
+	numFormula = 0;
 	allMaterial = 0;
 	allDosage = 0;
 	delete[] formula;
-	formula = new Formula[numFormula];
-	for (int i = 0; i < numFormula; i++)
-	{
-		formula[i].name = QString::fromStdString(myini.Material).split("<br/>")[i];
-		formula[i].amount = 0;
-		formula[i].company = "";
-	}
+	formula = new Formula[1];
+	//for (int i = 0; i < numFormula; i++)
+	//{
+	formula[0].name = "";//QString::fromStdString(myini.Material).split("<br/>")[i];
+	formula[0].amount = 0;
+	formula[0].company = "";
+	//}
 	fout << VERSIONID << " " << numFormula << " " << allMaterial << " " << allDosage << "\n";
-	for (int i = 0; i < numFormula; i++)
-	{
-		fout << formula[i];
-	}
+	//for (int i = 0; i < numFormula; i++)
+	//{
+	fout << formula[0];
+	//}
 	fout.close();
 	Index* tmp = new Index[++numIndex];
 	tmp[numIndex - 1].FName = name;
 	tmp[numIndex - 1].Path = QString::fromStdString(Encode(str1, ba.length()) + ".lfd");
+	tmp[numIndex - 1].isCompleted = false;
 	for (int i = 0; i < numIndex - 1; i++)
 	{
 		tmp[i].FName = index[i].FName;
 		tmp[i].Path = index[i].Path;
+		tmp[i].isCompleted = index[i].isCompleted;
 	}
 	delete[] index;
 	index = tmp;

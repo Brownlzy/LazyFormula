@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	if (file.exists() == true)
 	{
 		QProcess::startDetached(qApp->applicationDirPath() + "/update.bat");
-		qApp->exit(0);
+		QTimer::singleShot(0, qApp, &QCoreApplication::quit);
 	}
 	else
 	{
@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
 		translator.load(":/language/lazyformula_zh.qm");
 		qApp->installTranslator(&translator);
 		LazyFormula w;
+		w.setWindowIcon(QIcon(":/pic/ico"));
 		w.show();
 		return a.exec();
 	}

@@ -85,6 +85,9 @@
     <ClInclude Include="base64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtTranslation Include="lazyformula_zh.ts">
@@ -93,5 +96,15 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="docs\OTAinfo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LazyFormula.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="lf.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

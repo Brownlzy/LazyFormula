@@ -4,63 +4,88 @@
 <context>
     <name>LazyFormula</name>
     <message>
-        <location filename="LazyFormula.cpp" line="45"/>
+        <location filename="LazyFormula.cpp" line="47"/>
+        <location filename="LazyFormula.cpp" line="48"/>
         <source>Index is saved in:</source>
         <translation>索引文件存在:</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="51"/>
+        <location filename="LazyFormula.cpp" line="61"/>
         <source>numFormula:</source>
         <translation>配方总数:</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="63"/>
+        <location filename="LazyFormula.cpp" line="73"/>
+        <location filename="LazyFormula.cpp" line="179"/>
         <source>:All Dosage</source>
         <translation>:总计</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="64"/>
+        <location filename="LazyFormula.cpp" line="74"/>
+        <location filename="LazyFormula.cpp" line="180"/>
         <source>All Material:</source>
         <translation>原料种类:</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="112"/>
+        <location filename="LazyFormula.cpp" line="141"/>
+        <source>&quot;*&quot; cant be a part of formula name, Please change a name.</source>
+        <translation>配方名中不能含有&quot;*&quot;,请用其他符号代替.</translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.cpp" line="148"/>
         <source>Successfully add Formula &quot;</source>
         <translation>成功添加配方&quot;</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="112"/>
+        <location filename="LazyFormula.cpp" line="148"/>
         <source>&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="116"/>
+        <location filename="LazyFormula.cpp" line="152"/>
         <source>There is already a &quot;</source>
         <translation>已存在配方&quot;</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="116"/>
+        <location filename="LazyFormula.cpp" line="152"/>
         <source>&quot;, Please change a name</source>
         <translation>&quot;,请修改配方名</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="119"/>
+        <location filename="LazyFormula.cpp" line="155"/>
         <source>Failed to write file: &quot;index.lfi&quot;!.</source>
         <translation>写入文件&quot;index.lfi&quot;失败!.</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="123"/>
+        <location filename="LazyFormula.cpp" line="159"/>
         <source>Please enter a name.</source>
         <translation>请输入配方名.</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="136"/>
+        <location filename="LazyFormula.cpp" line="168"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.cpp" line="168"/>
+        <source>About to delete formula &quot;</source>
+        <translation>即将删除配方&quot;</translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.cpp" line="168"/>
+        <source>&quot;
+Press &quot;No&quot; to Cancel.</source>
+        <translation>&quot;
+按&quot;否&quot;取消删除.</translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.cpp" line="181"/>
         <source>Deleted Successfully</source>
         <translation>删除成功</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="102"/>
-        <location filename="LazyFormula.cpp" line="140"/>
+        <location filename="LazyFormula.cpp" line="133"/>
+        <location filename="LazyFormula.cpp" line="192"/>
         <source>Please select an item.</source>
         <translation>请选中一个配方.</translation>
     </message>
@@ -98,54 +123,62 @@
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="118"/>
+        <location filename="LazyFormula.ui" line="121"/>
+        <location filename="LazyFormula.ui" line="270"/>
         <source>Material</source>
         <translation>材料</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="123"/>
+        <location filename="LazyFormula.ui" line="126"/>
+        <location filename="LazyFormula.ui" line="275"/>
         <source>Dosage</source>
         <translation>用量</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="128"/>
+        <location filename="LazyFormula.ui" line="131"/>
+        <location filename="LazyFormula.ui" line="280"/>
         <source>Company</source>
         <translation>单位</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="133"/>
+        <location filename="LazyFormula.ui" line="136"/>
         <source>Percent</source>
         <translation>百分比</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="147"/>
+        <location filename="LazyFormula.ui" line="150"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="160"/>
+        <location filename="LazyFormula.ui" line="163"/>
         <source>inExplore</source>
         <translation>在文件管理器打开</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="186"/>
+        <location filename="LazyFormula.ui" line="189"/>
         <source>All Material:</source>
         <translation>原料种类:</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="202"/>
+        <location filename="LazyFormula.ui" line="205"/>
         <source>numFormula:</source>
         <translation>配方总数:</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="218"/>
+        <location filename="LazyFormula.ui" line="221"/>
         <source>:All Dosage</source>
         <translation>:总计</translation>
     </message>
     <message>
-        <location filename="LazyFormula.ui" line="244"/>
+        <location filename="LazyFormula.ui" line="247"/>
         <source>X</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.ui" line="294"/>
+        <source>Compeleted</source>
+        <translation>已完成配方</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -324,8 +357,8 @@
         <translation>需要登录</translation>
     </message>
     <message>
-        <location filename="Settings.cpp" line="55"/>
-        <location filename="Settings.cpp" line="66"/>
+        <location filename="Settings.cpp" line="56"/>
+        <location filename="Settings.cpp" line="67"/>
         <source>Update</source>
         <translation>立即更新</translation>
     </message>
@@ -335,57 +368,57 @@
     <message>
         <location filename="update.cpp" line="23"/>
         <source>Checking Update Information...</source>
-        <translation type="unfinished"></translation>
+        <translation>检查升级信息中...</translation>
     </message>
     <message>
         <location filename="update.cpp" line="75"/>
         <source>Build Time: </source>
-        <translation type="unfinished"></translation>
+        <translation>编译时间: </translation>
     </message>
     <message>
         <location filename="update.cpp" line="78"/>
         <source>T_T Nothing in here...</source>
-        <translation type="unfinished"></translation>
+        <translation>T_T 获取更新信息失败...</translation>
     </message>
     <message>
         <location filename="update.cpp" line="97"/>
         <source>File LazyFormula.bin Write Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>文件&quot;LazyFormula.bin&quot;写入失败.</translation>
     </message>
     <message>
         <location filename="update.cpp" line="104"/>
         <source>Downloading Binary File...</source>
-        <translation type="unfinished"></translation>
+        <translation>下载升级文件中...</translation>
     </message>
     <message>
         <location filename="update.cpp" line="142"/>
         <source>Download Completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>下载完成.</translation>
     </message>
     <message>
         <location filename="update.cpp" line="150"/>
         <source>Prepare Update Environment...</source>
-        <translation type="unfinished"></translation>
+        <translation>准备升级环境中...</translation>
     </message>
     <message>
         <location filename="update.cpp" line="164"/>
         <source>CRC32 Check Unpassed.</source>
-        <translation type="unfinished"></translation>
+        <translation>CRC32校验未通过.</translation>
     </message>
     <message>
         <location filename="update.cpp" line="165"/>
         <source>The validity of the downloaded program cannot be determined. You can try again, or go to LazyFormula.bin in the program directory to manually replace LazyFormula.exe</source>
-        <translation type="unfinished"></translation>
+        <translation>无法确定下载程序的有效性。您可以重试，或转到程序目录中的LazyFormula.bin手动替换LazyFormula.exe</translation>
     </message>
     <message>
         <location filename="update.cpp" line="171"/>
         <source>File update.bat Write Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>文件&quot;update.bat&quot;写入失败.</translation>
     </message>
     <message>
         <location filename="update.cpp" line="183"/>
         <source>Please Restart LazyFormula to Update.</source>
-        <translation type="unfinished"></translation>
+        <translation>请重启LazyFormula以升级.</translation>
     </message>
 </context>
 </TS>

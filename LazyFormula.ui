@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>671</width>
+    <width>881</width>
     <height>508</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="btnReload">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>9</y>
+      <x>719</x>
+      <y>40</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>9</y>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="btnDelete">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>9</y>
+      <x>507</x>
+      <y>40</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -56,9 +56,9 @@
    <widget class="QLabel" name="labIndexPath">
     <property name="geometry">
      <rect>
-      <x>670</x>
+      <x>430</x>
       <y>10</y>
-      <width>511</width>
+      <width>211</width>
       <height>20</height>
      </rect>
     </property>
@@ -85,8 +85,8 @@
    <widget class="QPushButton" name="btnSettings">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>9</y>
+      <x>350</x>
+      <y>10</y>
       <width>71</width>
       <height>23</height>
      </rect>
@@ -100,9 +100,12 @@
      <rect>
       <x>190</x>
       <y>60</y>
-      <width>471</width>
+      <width>391</width>
       <height>421</height>
      </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
     </property>
     <property name="sortingEnabled">
      <bool>true</bool>
@@ -111,7 +114,7 @@
      <number>0</number>
     </property>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>110</number>
+     <number>90</number>
     </attribute>
     <column>
      <property name="text">
@@ -137,8 +140,8 @@
    <widget class="QPushButton" name="btnSave">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>9</y>
+      <x>801</x>
+      <y>40</y>
       <width>71</width>
       <height>23</height>
      </rect>
@@ -150,8 +153,8 @@
    <widget class="QPushButton" name="btnShowInExplore">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>9</y>
+      <x>270</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -164,7 +167,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>11</y>
       <width>182</width>
       <height>21</height>
      </rect>
@@ -173,9 +176,9 @@
    <widget class="QLabel" name="labM">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>190</x>
       <y>40</y>
-      <width>251</width>
+      <width>361</width>
       <height>21</height>
      </rect>
     </property>
@@ -207,7 +210,7 @@
      <rect>
       <x>300</x>
       <y>40</y>
-      <width>361</width>
+      <width>201</width>
       <height>21</height>
      </rect>
     </property>
@@ -224,34 +227,79 @@
    <widget class="QLineEdit" name="txtSearch">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>39</y>
-      <width>81</width>
-      <height>22</height>
+      <x>642</x>
+      <y>11</y>
+      <width>207</width>
+      <height>21</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="btnClearSearch">
     <property name="geometry">
      <rect>
-      <x>269</x>
-      <y>38</y>
+      <x>848</x>
+      <y>10</y>
       <width>24</width>
-      <height>24</height>
+      <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>X</string>
     </property>
    </widget>
+   <widget class="QTableWidget" name="tableEdit">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>60</y>
+      <width>291</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <property name="sortingEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>90</number>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Material</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Dosage</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Company</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>619</x>
+      <y>40</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Compeleted</string>
+    </property>
+   </widget>
    <zorder>labD</zorder>
    <zorder>btnReload</zorder>
    <zorder>btnNewFormula</zorder>
-   <zorder>btnDelete</zorder>
    <zorder>labIndexPath</zorder>
    <zorder>listIndex</zorder>
    <zorder>btnSettings</zorder>
-   <zorder>tableFormula</zorder>
    <zorder>btnSave</zorder>
    <zorder>btnShowInExplore</zorder>
    <zorder>txtNewFormula</zorder>
@@ -259,6 +307,10 @@
    <zorder>labF</zorder>
    <zorder>txtSearch</zorder>
    <zorder>btnClearSearch</zorder>
+   <zorder>tableEdit</zorder>
+   <zorder>checkBox</zorder>
+   <zorder>btnDelete</zorder>
+   <zorder>tableFormula</zorder>
   </widget>
   <widget class="QStatusBar" name="stBar"/>
  </widget>

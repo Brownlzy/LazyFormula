@@ -174,7 +174,7 @@ void Update::Updatefile()
 	fbat.open(qApp->applicationDirPath().toStdString() + "/update.bat");
 	fbat << "@echo off\n";
 	fbat << "TIMEOUT /T 3\n";
-	fbat << "taskkill /pid " << qApp->applicationPid() << " -t -f\n";
+	//fbat << "taskkill /pid " << qApp->applicationPid() << " -t -f\n";
 	fbat << "del " << qApp->applicationName().toStdString() << ".exe\n";
 	fbat << "ren LazyFormula.bin LazyFormula.exe\n";
 	fbat << "start LazyFormula.exe\n";

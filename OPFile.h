@@ -34,9 +34,10 @@ struct Index
 {
 	QString FName = "";
 	QString Path = "";
+	bool isCompleted = false;
 	friend ostream& operator<<(ostream& out, const Index& obj)
 	{
-		out << obj.FName.toStdString() << "," << obj.Path.toStdString() << ",\n";
+		out << obj.FName.toStdString() << "," << obj.Path.toStdString() << "," << obj.isCompleted << ",\n";
 		return out;
 	}
 	friend istream& operator>>(istream& in, Index& obj)
@@ -46,6 +47,10 @@ struct Index
 		QString qtmp = QString::fromStdString(tmp);
 		obj.FName = qtmp.split(",")[0];
 		obj.Path = qtmp.split(",")[1];
+		if (qtmp.count(",") == 3)
+			obj.isCompleted = qtmp.split(",")[2].toInt();
+		else
+			obj.isCompleted = 1;
 		return in;
 	}
 };
@@ -71,7 +76,7 @@ public:
 	int WriteIndex();
 	int ReadFormula(int i);
 	int ReadFormula(QString name);
-	int WriteFormula(int i);
+	int WriteFormula(int i, bool isDone);
 	int WriteFormula(QString name);
 	int DeleteFormula(QString name);
 
