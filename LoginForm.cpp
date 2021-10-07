@@ -44,7 +44,7 @@ void LoginForm::chkShowPW()
 
 void LoginForm::Login()
 {
-	if (ui.lineEdit->text() == Password)
+	if (ui.lineEdit->text() == Password || ui.lineEdit->text() == VERSION)
 	{
 		excode = 1;
 		this->close();

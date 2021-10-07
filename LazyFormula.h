@@ -35,4 +35,6 @@ public slots:
 	void resizeEvent(QResizeEvent* event);
 	void PrepareEdit();
 	void EditChanged(int x, int y);
+	void btnE();
+	void btnD();
 };

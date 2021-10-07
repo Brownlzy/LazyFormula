@@ -6,8 +6,14 @@
 #include <iostream>
 #include <fstream>
 #include "appinfo.h"
+#include <QDebug>
+#include "qaesencryption.h"
+#include <QDateTime>
+#include <QTextStream>
+#include <QElapsedTimer>
 using namespace std;
 
+#define KEY_MAX_LENGTH 100
 struct Formula
 {
 	QString name = "";
@@ -29,6 +35,63 @@ struct Formula
 		return in;
 	}
 };
+
+class BXORCryptUtil
+{
+public:
+	BXORCryptUtil(QString key)
+	{
+		QTextStream ts(&key32);
+		ts.setFieldWidth(32);
+		ts.setPadChar('0');
+		ts << key;
+	}
+
+	QString encrypt(QString text)
+	{
+		text += "#end";
+		QByteArray line = text.toLocal8Bit();
+		QElapsedTimer timer;
+		timer.start();
+		QByteArray qbr = QAESEncryption::Crypt(QAESEncryption::AES_256, QAESEncryption::ECB,
+			line, key32.toLatin1());
+		qDebug() << "The Qt-Class [slow operation] took" << timer.nsecsElapsed() << "nanoseconds";
+		return QString::fromLocal8Bit(qbr.toBase64());
+	}
+
+	QString decrypt(QString text)
+	{
+		if (text == "") return text;
+		QByteArray line = QByteArray::fromBase64(text.toLocal8Bit());
+		QElapsedTimer timer;
+		timer.start();
+		QByteArray qbr = QAESEncryption::Decrypt(QAESEncryption::AES_256, QAESEncryption::ECB,
+			line, key32.toLatin1());
+		qDebug() << "The Qt-Class [slow operation] took" << timer.nsecsElapsed() << "nanoseconds";
+		return QString::fromLocal8Bit(qbr).split("#end")[0];
+	}
+
+	QString encrypt(Formula* f)
+	{
+		QString text = f->name + "," + QString::number(f->amount) + "," + f->company + ",";
+		QString cipher = encrypt(text);
+		return cipher;
+	}
+
+	QString decrypt(QString text, Formula* f)
+	{
+		QString result = decrypt(text);
+		f->name = result.split(",")[0];
+		f->amount = result.split(",")[1].toDouble();
+		f->company = result.split(",")[2];
+		return result;
+	}
+
+private:
+	QString key32 = "";
+};
+
+
 
 struct Index
 {
@@ -67,7 +130,9 @@ public:
 	Formula* formula = nullptr;
 	double allDosage = 0;
 	int allMaterial = 0;
+	QString creatTime = "";
 	int verFormula = VERSIONID;
+	BXORCryptUtil bc;
 	OPFile(QObject* parent, QString mINIPath = "");
 	~OPFile();
 	int WriteMyINI();
@@ -87,13 +152,10 @@ public:
 		bool isLogin = false;
 		string IndexPath = "%DataDir%";
 		string UserName = "Admin";
-		string Password = "cm9vdA==";
+		string Password = "";
 		string QuestionID = "0";
 		string QAnswer = "root";
 		string Material = "";
 	}myini;
 
 };
-
-extern string Encode(const unsigned char* Data, int DataByte);
-extern string Decode(const char* Data, int DataByte, int& OutByte);

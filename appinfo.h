@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #define APPNAME "LazyFormula"
-#define VERSION "0.5-beta"
-#define VERSIONID 500
+#define VERSION "0.6-beta"
+#define VERSIONID 605
 #define BIRTHDAY "2021/9/20"
 #define UPDATEINFOURL "http://192.168.0.6/OTAinfo.txt"
 #define DEVELOPER "Brownlzy"

@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="btnReload">
     <property name="geometry">
      <rect>
-      <x>719</x>
+      <x>573</x>
       <y>40</y>
       <width>75</width>
       <height>23</height>
@@ -56,9 +56,9 @@
    <widget class="QLabel" name="labIndexPath">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>352</x>
       <y>10</y>
-      <width>211</width>
+      <width>231</width>
       <height>20</height>
      </rect>
     </property>
@@ -85,7 +85,7 @@
    <widget class="QPushButton" name="btnSettings">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>800</x>
       <y>10</y>
       <width>71</width>
       <height>23</height>
@@ -108,7 +108,7 @@
      <set>QAbstractItemView::NoEditTriggers</set>
     </property>
     <property name="sortingEnabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="rowCount">
      <number>0</number>
@@ -227,9 +227,9 @@
    <widget class="QLineEdit" name="txtSearch">
     <property name="geometry">
      <rect>
-      <x>642</x>
+      <x>580</x>
       <y>11</y>
-      <width>207</width>
+      <width>191</width>
       <height>21</height>
      </rect>
     </property>
@@ -237,7 +237,7 @@
    <widget class="QPushButton" name="btnClearSearch">
     <property name="geometry">
      <rect>
-      <x>848</x>
+      <x>770</x>
       <y>10</y>
       <width>24</width>
       <height>23</height>
@@ -255,6 +255,9 @@
       <width>291</width>
       <height>421</height>
      </rect>
+    </property>
+    <property name="autoScroll">
+     <bool>true</bool>
     </property>
     <property name="sortingEnabled">
      <bool>false</bool>
@@ -284,7 +287,7 @@
    <widget class="QCheckBox" name="checkBox">
     <property name="geometry">
      <rect>
-      <x>619</x>
+      <x>699</x>
       <y>40</y>
       <width>101</width>
       <height>21</height>
@@ -294,6 +297,83 @@
      <string>Compeleted</string>
     </property>
    </widget>
+   <widget class="QPlainTextEdit" name="txtO">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>130</y>
+      <width>301</width>
+      <height>121</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txtKey">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>271</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="txtD">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>310</y>
+      <width>301</width>
+      <height>121</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnE">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>270</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>E</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnD">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>270</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>D</string>
+    </property>
+   </widget>
+   <zorder>txtD</zorder>
+   <zorder>btnE</zorder>
+   <zorder>btnD</zorder>
+   <zorder>txtKey</zorder>
+   <zorder>txtO</zorder>
+   <zorder>checkBox</zorder>
    <zorder>labD</zorder>
    <zorder>btnReload</zorder>
    <zorder>btnNewFormula</zorder>
@@ -308,7 +388,6 @@
    <zorder>txtSearch</zorder>
    <zorder>btnClearSearch</zorder>
    <zorder>tableEdit</zorder>
-   <zorder>checkBox</zorder>
    <zorder>btnDelete</zorder>
    <zorder>tableFormula</zorder>
   </widget>

@@ -1,9 +1,12 @@
-LazyFormula_OTA_INFO!100<0.3-alpha<302<1<97ADF45A<155KB<http://192.168.0.6/LFv[VERSION]_exe!========最新版本========
+LazyFormula_OTA_INFO!100<0.3-alpha<601<1<97ADF45A<155KB<http://192.168.0.6/LFv[VERSION]_exe!========最新版本========
+Version 0.6-beta
+1.增加AES加密.
+
+========历史版本========
 Version 0.5-beta
 1.增加3个图标.
 2.优化升级流程.
 
-========历史版本========
 Version 0.4-alpha
 1.更方便直观的配方表.
 

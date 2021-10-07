@@ -16,76 +16,88 @@
     </message>
     <message>
         <location filename="LazyFormula.cpp" line="73"/>
-        <location filename="LazyFormula.cpp" line="179"/>
+        <location filename="LazyFormula.cpp" line="96"/>
+        <location filename="LazyFormula.cpp" line="192"/>
         <source>:All Dosage</source>
         <translation>:总计</translation>
     </message>
     <message>
         <location filename="LazyFormula.cpp" line="74"/>
-        <location filename="LazyFormula.cpp" line="180"/>
+        <location filename="LazyFormula.cpp" line="97"/>
+        <location filename="LazyFormula.cpp" line="193"/>
         <source>All Material:</source>
         <translation>原料种类:</translation>
     </message>
     <message>
         <location filename="LazyFormula.cpp" line="141"/>
+        <source>Susseffully Saved formula &quot;</source>
+        <translation>成功保存配方&quot;</translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.cpp" line="141"/>
+        <source>&quot;.</source>
+        <translation>&quot;.</translation>
+    </message>
+    <message>
+        <location filename="LazyFormula.cpp" line="153"/>
         <source>&quot;*&quot; cant be a part of formula name, Please change a name.</source>
         <translation>配方名中不能含有&quot;*&quot;,请用其他符号代替.</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="148"/>
+        <location filename="LazyFormula.cpp" line="160"/>
         <source>Successfully add Formula &quot;</source>
         <translation>成功添加配方&quot;</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="148"/>
+        <location filename="LazyFormula.cpp" line="160"/>
         <source>&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="152"/>
+        <location filename="LazyFormula.cpp" line="164"/>
         <source>There is already a &quot;</source>
         <translation>已存在配方&quot;</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="152"/>
+        <location filename="LazyFormula.cpp" line="164"/>
         <source>&quot;, Please change a name</source>
         <translation>&quot;,请修改配方名</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="155"/>
+        <location filename="LazyFormula.cpp" line="167"/>
         <source>Failed to write file: &quot;index.lfi&quot;!.</source>
         <translation>写入文件&quot;index.lfi&quot;失败!.</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="159"/>
+        <location filename="LazyFormula.cpp" line="171"/>
         <source>Please enter a name.</source>
         <translation>请输入配方名.</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="168"/>
+        <location filename="LazyFormula.cpp" line="180"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="168"/>
+        <location filename="LazyFormula.cpp" line="180"/>
         <source>About to delete formula &quot;</source>
         <translation>即将删除配方&quot;</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="168"/>
+        <location filename="LazyFormula.cpp" line="180"/>
         <source>&quot;
 Press &quot;No&quot; to Cancel.</source>
         <translation>&quot;
 按&quot;否&quot;取消删除.</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="181"/>
+        <location filename="LazyFormula.cpp" line="194"/>
         <source>Deleted Successfully</source>
         <translation>删除成功</translation>
     </message>
     <message>
-        <location filename="LazyFormula.cpp" line="133"/>
-        <location filename="LazyFormula.cpp" line="192"/>
+        <location filename="LazyFormula.cpp" line="145"/>
+        <location filename="LazyFormula.cpp" line="205"/>
         <source>Please select an item.</source>
         <translation>请选中一个配方.</translation>
     </message>
@@ -357,8 +369,8 @@ Press &quot;No&quot; to Cancel.</source>
         <translation>需要登录</translation>
     </message>
     <message>
-        <location filename="Settings.cpp" line="56"/>
-        <location filename="Settings.cpp" line="67"/>
+        <location filename="Settings.cpp" line="57"/>
+        <location filename="Settings.cpp" line="68"/>
         <source>Update</source>
         <translation>立即更新</translation>
     </message>

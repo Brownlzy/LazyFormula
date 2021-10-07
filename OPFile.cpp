@@ -1,7 +1,8 @@
 ﻿#include "OPFile.h"
 
 OPFile::OPFile(QObject* parent, QString mINIPath)
-	: QObject(parent)
+	: QObject(parent),
+	bc(QString::fromStdString(VERSION) + QString::number(VERSIONID))
 {
 	if (mINIPath == "")
 	{
@@ -25,10 +26,12 @@ int OPFile::WriteMyINI()
 	fout << "isLogin = " << myini.isLogin << endl;
 	fout << "IndexPath = " << myini.IndexPath << endl;
 	fout << "UserName = " << myini.UserName << endl;
-	fout << "Password = " << myini.Password << endl;
+	fout << "Password = " << bc.encrypt(QString::fromStdString(myini.Password)).toStdString() << endl;
 	fout << "QuestionID = " << myini.QuestionID << endl;
 	fout << "QAnswer = " << myini.QAnswer << endl;
-	fout << "Material = " << myini.Material << endl;
+	//QByteArray ba = QString::fromStdString(myini.Material).toLocal8Bit().toBase64();
+	//fout << "Material = " << QString::fromLocal8Bit(ba).toStdString() << endl;
+	fout << "Material = " << bc.encrypt(QString::fromStdString(myini.Material)).toStdString() << endl;
 	fout.close();
 	return 0;
 }
@@ -68,6 +71,19 @@ int OPFile::ReadMyINI()
 				fin >> str_tmp >> myini.QAnswer;
 			else if ("Material" == str_tmp)
 				fin >> str_tmp >> myini.Material;
+		}
+		if (myini.VersionID >= 600)
+		{
+			BXORCryptUtil bctmp(QString::fromStdString(myini.Version) + QString::number(myini.VersionID));
+			myini.Material = bctmp.decrypt(QString::fromStdString(myini.Material)).toStdString();
+			myini.Password = bctmp.decrypt(QString::fromStdString(myini.Password)).toStdString();
+			//QByteArray ba = QByteArray::fromBase64(QString::fromStdString(myini.Material).toLocal8Bit());
+			//myini.Material = QString::fromLocal8Bit(ba).toStdString();
+		}
+		else
+		{
+			QByteArray ptmp = QByteArray::fromBase64(QByteArray::fromStdString(myini.Password));
+			myini.Password = ptmp.toStdString();
 		}
 	}
 	fin.close();
@@ -127,13 +143,33 @@ int OPFile::ReadFormula(int i)
 	{
 		return -2;
 	}
-	fin >> verFormula >> numFormula >> allMaterial >> allDosage;
+	string tmpTime;
+	fin >> verFormula;
+	QString key = "0\n0\n0\n0\n0\n0";
+	if (verFormula >= 601)
+	{
+		fin >> numFormula >> allMaterial >> allDosage >> tmpTime;
+		creatTime = QString::fromStdString(tmpTime);
+	}
+	else
+	{
+		fin >> numFormula >> allMaterial >> allDosage;
+	}
+	BXORCryptUtil tmpbc(creatTime);
 	if (numFormula != 0)
 	{
 		formula = new Formula[numFormula];
 		for (int i = 0; i < numFormula; i++)
 		{
-			fin >> formula[i];
+			if (verFormula >= 600)
+			{
+				fin >> tmpTime;
+				tmpbc.decrypt(QString::fromStdString(tmpTime), &formula[i]);
+			}
+			else
+			{
+				fin >> formula[i];
+			}
 		}
 	}
 	fin.close();
@@ -172,10 +208,17 @@ int OPFile::WriteFormula(int i, bool isDone)
 			allDosage += formula[i].amount;
 		}
 	}
-	fout << VERSIONID << " " << numFormula << " " << allMaterial << " " << allDosage << "\n";
+	if (verFormula < 600)
+	{
+		QDateTime curDateTime = QDateTime::currentDateTime();
+		creatTime = curDateTime.toString("yyyyMMddhhmmss");
+	}
+	fout << VERSIONID << " " << numFormula << " " << allMaterial << " " << allDosage << " " << creatTime.toStdString() << "\n";
+	verFormula = VERSIONID;
+	BXORCryptUtil tmpbc(creatTime);
 	for (int i = 0; i < numFormula; i++)
 	{
-		fout << formula[i];
+		fout << tmpbc.encrypt(&formula[i]).toStdString() << "\n";
 	}
 	fout.close();
 	return 0;
@@ -188,9 +231,8 @@ int OPFile::WriteFormula(QString name)
 		if (name == index[i].FName)
 			return -1;
 	}
-	QByteArray ba = name.toLatin1();
-	unsigned char* str1 = (unsigned char*)ba.data();
-	ofstream fout(myini.IndexPath + "/" + Encode(str1, ba.length()) + ".lfd");
+	QByteArray ba = name.toLocal8Bit().toBase64();
+	ofstream fout(myini.IndexPath + "/" + QString::fromLocal8Bit(ba).replace("/", "-").toStdString() + ".lfd");
 	if (!fout)
 	{
 		return -2;
@@ -200,6 +242,8 @@ int OPFile::WriteFormula(QString name)
 	numFormula = 0;
 	allMaterial = 0;
 	allDosage = 0;
+	QDateTime curDateTime = QDateTime::currentDateTime();
+	creatTime = curDateTime.toString("yyyyMMddhhmmss");
 	delete[] formula;
 	formula = new Formula[1];
 	//for (int i = 0; i < numFormula; i++)
@@ -208,15 +252,16 @@ int OPFile::WriteFormula(QString name)
 	formula[0].amount = 0;
 	formula[0].company = "";
 	//}
-	fout << VERSIONID << " " << numFormula << " " << allMaterial << " " << allDosage << "\n";
+	fout << VERSIONID << " " << numFormula << " " << allMaterial << " " << allDosage << " " << creatTime.toStdString() << "\n";
 	//for (int i = 0; i < numFormula; i++)
 	//{
-	fout << formula[0];
+	BXORCryptUtil tmpbc(creatTime);
+	fout << tmpbc.encrypt(&formula[0]).toStdString() << "\n";
 	//}
 	fout.close();
 	Index* tmp = new Index[++numIndex];
 	tmp[numIndex - 1].FName = name;
-	tmp[numIndex - 1].Path = QString::fromStdString(Encode(str1, ba.length()) + ".lfd");
+	tmp[numIndex - 1].Path = QString::fromLocal8Bit(ba).replace("/", "-") + ".lfd";
 	tmp[numIndex - 1].isCompleted = false;
 	for (int i = 0; i < numIndex - 1; i++)
 	{

@@ -4,6 +4,7 @@
 #include "ui_Settings.h"
 #include "OPFile.h"
 #include "update.h"
+#include <QMessagebox>
 
 class Settings : public QDialog
 {

@@ -16,10 +16,10 @@ int LazyFormula::Initiallize()
 	if (pOPFile->myini.isLogin)
 	{
 		this->hide();
-		QByteArray ba = QString::fromStdString(pOPFile->myini.Password).toLatin1();
-		char* str1 = (char*)ba.data();
 		int a;
-		LoginForm l(this, QString::fromStdString(Decode(str1, ba.length(), a)));
+		//BXORCryptUtil bctmp(QString::fromStdString(pOPFile->myini.Version) + QString::number(pOPFile->myini.VersionID));
+		//LoginForm l(this, bctmp.decrypt(QString::fromStdString(pOPFile->myini.Password)));
+		LoginForm l(this, QString::fromStdString(pOPFile->myini.Password));
 		l.setModal(this);
 		l.show();
 		l.exec();
@@ -39,6 +39,8 @@ int LazyFormula::Initiallize()
 	connect(ui.btnSave, SIGNAL(clicked()), this, SLOT(SaveFormula()));
 	connect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
 	connect(ui.txtNewFormula, SIGNAL(returnPressed()), this, SLOT(AddIndex()));
+	connect(ui.btnD, SIGNAL(clicked()), this, SLOT(btnD()));
+	connect(ui.btnE, SIGNAL(clicked()), this, SLOT(btnE()));
 	return 0;
 }
 
@@ -71,7 +73,7 @@ void LazyFormula::RefreshFormula()
 	if (row != -1)
 	{
 		ui.labD->setText(QString::number(pOPFile->allDosage) + tr(":All Dosage"));
-		ui.labM->setText(tr("All Material:") + QString::number(pOPFile->allMaterial));
+		ui.labM->setText("Ver:" + QString::number(pOPFile->verFormula) + " " + tr("All Material:") + QString::number(pOPFile->allMaterial));
 		ui.tableFormula->clearContents();
 		ui.tableFormula->setRowCount(pOPFile->numFormula);
 		for (int i = 0; i < pOPFile->numFormula; i++)
@@ -79,7 +81,8 @@ void LazyFormula::RefreshFormula()
 			ui.tableFormula->setItem(i, 0, new QTableWidgetItem(pOPFile->formula[i].name));
 			ui.tableFormula->setItem(i, 1, new QTableWidgetItem(QString::number(pOPFile->formula[i].amount)));
 			ui.tableFormula->setItem(i, 2, new QTableWidgetItem(pOPFile->formula[i].company));
-			if (pOPFile->formula[i].amount > 0 && pOPFile->allDosage > 0) ui.tableFormula->setItem(i, 3, new QTableWidgetItem(QString::number((int)(pOPFile->formula[i].amount / pOPFile->allDosage * 100)) + "%"));
+			if (pOPFile->formula[i].amount > 0 && pOPFile->allDosage > 0)
+				ui.tableFormula->setItem(i, 3, new QTableWidgetItem(QString::number(((int)(pOPFile->formula[i].amount / pOPFile->allDosage * 10000) / 100.)) + "%"));
 		}
 		disconnect(ui.tableEdit, SIGNAL(cellChanged(int, int)), this, SLOT(EditChanged(int, int)));
 		PrepareEdit();
@@ -214,6 +217,7 @@ void LazyFormula::resizeEvent(QResizeEvent* event)
 	ui.tableFormula->setGeometry(ui.tableFormula->x(), ui.tableFormula->y(), ui.tableFormula->width(), y - 120);
 	ui.tableEdit->setGeometry(ui.tableEdit->x(), ui.tableEdit->y(), ui.tableEdit->width(), y - 120);
 	//if (x < 672)ui.labD->move(x - 371, ui.labD->y());
+	//ui.label_2->setGeometry(ui.label_2->x(), ui.label_2->y(), ui.label_2->width(), y - 146);
 }
 
 void LazyFormula::PrepareEdit()
@@ -284,6 +288,18 @@ void LazyFormula::EditChanged(int x, int y)
 			ui.tableFormula->setItem(ui.tableFormula->rowCount() - 1, 2, new QTableWidgetItem(ui.tableEdit->item(x, 2)->text()));
 		}
 	}
+}
+
+void LazyFormula::btnE()
+{
+	BXORCryptUtil pu("123\n123\n123\n123\n123\n123");
+	ui.txtD->setPlainText(pu.encrypt(ui.txtO->toPlainText()));
+}
+
+void LazyFormula::btnD()
+{
+	BXORCryptUtil pu("123\n123\n123\n123\n123\n123");
+	ui.txtO->setPlainText(pu.decrypt(ui.txtD->toPlainText()));
 }
 
 void LazyFormula::ShowSettings()

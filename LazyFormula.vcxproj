@@ -151,8 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="base64.cpp" />
     <ClCompile Include="OPFile.cpp" />
+    <ClCompile Include="qaesencryption.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="update.cpp" />
     <QtRcc Include="LazyFormula.qrc" />
@@ -175,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="appinfo.h" />
-    <ClInclude Include="base64.h" />
+    <QtMoc Include="qaesencryption.h" />
     <ClInclude Include="resource.h" />
     <QtMoc Include="OPFile.h" />
   </ItemGroup>
